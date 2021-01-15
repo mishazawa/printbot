@@ -1,6 +1,8 @@
 github.com/Tnze/go-mc v1.16.2-0.20210109052551-0e959dfbc000 h1:nFyEwW4mgkSshyGOFV91IsoP5ZAT4oni1StQK+irCpA=
 github.com/Tnze/go-mc v1.16.2-0.20210109052551-0e959dfbc000/go.mod h1:0zQrnAv2kiKDc3WKCdX+/S8F+x5tGeUXqhe9GiKL+nk=
 github.com/beefsack/go-astar v0.0.0-20200827232313-4ecf9e304482/go.mod h1:Cu3t5VeqE8kXjUBeNXWQprfuaP5UCIc5ggGjgMx9KFc=
+github.com/esimov/colorquant v1.0.0 h1:Au0vgJi9uTftrZxoqKJXGO1im5pny79mJpVYPij3vp0=
+github.com/esimov/colorquant v1.0.0/go.mod h1:av7lYasj6eTILlP0s+rmU8POP1rsktNIBEIjjDd+wJk=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/iancoleman/strcase v0.1.1/go.mod h1:SK73tn/9oHe+/Y0h39VT4UCxmurVJkR5NA7kMEAOgSE=

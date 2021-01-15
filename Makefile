@@ -13,11 +13,12 @@ clean:
 test: clean
 	go test -v ./...
 
-commit: fmt
+commit: fmt critic
 	git add .
 	git commit --allow-empty
 
 fmt:
+	goimports -l -w .
 	gofmt -s -w .
 
 critic:

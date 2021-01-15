@@ -1,6 +1,4 @@
 .env
-
 data/*
-
 !data/demo.png
-
+bin/

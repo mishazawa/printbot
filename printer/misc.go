@@ -6,6 +6,11 @@ import (
 	"github.com/esimov/colorquant"
 )
 
+/*
+	This filters was borrowed from following repository
+	https://github.com/esimov/colorquant
+*/
+
 var floydSteinberg colorquant.Dither = colorquant.Dither{
 	Filter: [][]float32{
 		{0.0, 0.0, 0.0, 7.0 / 48.0, 5.0 / 48.0},

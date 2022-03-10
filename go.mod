@@ -1,10 +1,10 @@
 module github.com/mishazawa/printbot
 
-go 1.15
+go 1.17
 
 require (
-	github.com/Tnze/go-mc v1.16.2-0.20210109052551-0e959dfbc000
+	github.com/Tnze/go-mc v1.18.1
 	github.com/esimov/colorquant v1.0.0
-	golang.org/x/mod v0.4.0 // indirect
-	golang.org/x/tools v0.0.0-20210113180300-f96436850f18 // indirect
 )
+
+require github.com/google/uuid v1.1.1 // indirect

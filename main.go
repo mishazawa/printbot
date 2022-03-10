@@ -5,7 +5,9 @@ import (
 	"image"
 	"image/jpeg"
 	"os"
+	"path/filepath"
 
+	"github.com/mishazawa/printbot/parser"
 	"github.com/mishazawa/printbot/printer"
 )
 
@@ -31,8 +33,6 @@ func init() {
 }
 
 func main() {
-	image.RegisterFormat("jpeg", "jpeg", jpeg.Decode, jpeg.DecodeConfig)
-
 	file, err := os.Open(filePath)
 	if err != nil {
 		panic(err.Error())
@@ -40,9 +40,28 @@ func main() {
 
 	defer file.Close()
 
+	ext := filepath.Ext(filePath)
+
+	if ext == ".jpg" || ext == ".jpeg" {
+		if err := processImage(file); err != nil {
+			panic(err.Error())
+		}
+	}
+
+	if ext == ".obj" {
+		if err := processModel(file); err != nil {
+			panic(err.Error())
+		}
+	}
+
+}
+
+func processImage(file *os.File) error {
+	image.RegisterFormat("jpeg", "jpeg", jpeg.Decode, jpeg.DecodeConfig)
+
 	img, _, err := image.Decode(file)
 	if err != nil {
-		panic(err.Error())
+		return err
 	}
 
 	bounds := img.Bounds()
@@ -53,12 +72,30 @@ func main() {
 
 	if remove {
 		if err := builder.Remove(width, height, x, y, z); err != nil {
-			panic(err.Error())
+			return err
 		}
 	} else {
 		if err := builder.Draw(img, x, y, z); err != nil {
-			panic(err.Error())
+			return err
 		}
 	}
 
+	return nil
+}
+
+func processModel(file *os.File) error {
+	voxels, err := parser.Parse(file)
+
+	if err != nil {
+		return err
+	}
+
+	builder := printer.NewPrinter(host+":"+port, password)
+	defer builder.Close()
+
+	if err := builder.Print(voxels, x, y, z, remove); err != nil {
+		return err
+	}
+
+	return nil
 }

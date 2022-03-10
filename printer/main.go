@@ -5,6 +5,7 @@ import (
 	"image"
 
 	mc "github.com/Tnze/go-mc/net"
+	"github.com/mishazawa/printbot/parser"
 )
 
 type Printer struct {
@@ -30,7 +31,7 @@ func (b *Printer) Draw(source image.Image, horizontal, vertical, depth int) erro
 		for x := 0; x < width; x++ {
 			color := img.At(x, y)
 
-			err := b.setBlock(woolColorMap[color], horizontal+x, vertical+height-y, depth)
+			err := b.setBlock(concreteColorMap[color], horizontal+x, vertical+height-y, depth)
 
 			if err != nil {
 				return err
@@ -40,6 +41,24 @@ func (b *Printer) Draw(source image.Image, horizontal, vertical, depth int) erro
 	return nil
 }
 
+func (b *Printer) Print(source []parser.Voxel, horizontal, vertical, depth int, remove bool) error {
+	for _, v := range source {
+
+		block := "air"
+		if !remove {
+			block = concreteColorMap[concretePalette[0]]
+		}
+
+		err := b.setBlock(block, horizontal+v.X, vertical+v.Y, depth+v.Z)
+
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// no sense to join draw/remove fns because of quantifying
 func (b *Printer) Remove(width, height, horizontal, vertical, depth int) error {
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
@@ -76,8 +95,9 @@ func (b *Printer) Close() error {
 func quantify(src image.Image) image.Image {
 	dst := image.NewPaletted(
 		image.Rect(0, 0, src.Bounds().Dx(), src.Bounds().Dy()),
-		woolPalette,
+		concretePalette,
 	)
 
-	return dither["FloydSteinberg"].Quantize(src, dst, len(woolPalette), true, true)
+	return dither["Burkes"].Quantize(src, dst, len(concretePalette), true, true)
+	// return colorquant.NoDither.Quantize(src, dst, len(concretePalette), true, true)
 }
